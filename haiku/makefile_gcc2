@@ -1,0 +1,56 @@
+#-DRDPSND_BEOS=1  -DWITH_RDPSND=1 -DWITH_OPENSSL=1
+CC = gcc
+CFLAGS = -Os -DL_ENDIAN=1 -D_BONE_=1 -I./ -I./vgagl -g
+RESTOBJ = ../seamless.o ../printercache.o ../serial.o ../parallel.o ../printer.o ../rdpdr.o ../disk.o ../rdpsnd_dsp.o ../rdpsnd.o ../cliprdr.o ../tcp.o ../iso.o ../mcs.o ../secure.o ../rdp.o ../rdp5.o ../orders.o ../cache.o ../mppc.o ../licence.o ../bitmap.o ../channels.o ../pstcache.o ../ssl.o ../utils.o ../asn.o
+LDFLAGS = -L./ -L./vgagl -lvgagl -lbe -lroot -ltextencoding -lmedia -lnetwork -lstdc++.r4 -lcrypto -lssl
+
+all: svgard
+svgard: svga_to_haiku.o window_haiku.o clip_haiku.o  $(RESTOBJ)
+	${MAKE} -C vgagl
+	$(CC) -o rdesktop svga_to_haiku.o window_haiku.o clip_haiku.o $(RESTOBJ) $(LDFLAGS)
+	
+
+#rest: $(RESTOBJ)
+#rest: tcp.o iso.o mcs.o secure.o rdp.o rdp5.o orders.o cache.o mppc.o licence.o bitmap.o channels.o pstcache.o
+rest: ../seamless.c ../printercache.c ../serial.c ../parallel.c ../printer.c ../rdpdr.c ../disk.c ../rdpsnd_dsp.c ../rdpsnd.c ../cliprdr.c ../tcp.c ../iso.c ../mcs.c ../secure.c ../rdp.c ../rdp5.c ../orders.c ../cache.c ../mppc.c ../licence.c ../bitmap.c ../channels.c ../pstcache.c ../ssl.c ../utils.c ../asn.c
+#	$(CC) $(CFLAGS) -c ../rdpsnd.c -o ../rdpsnd.o
+#	$(CC) $(CFLAGS) -c ../rdpsnd_dsp.c -o ../rdpsnd_dsp.o
+	$(CC) $(CFLAGS) -c ../cliprdr.c -o ../cliprdr.o
+	$(CC) $(CFLAGS) -c ../tcp.c -o ../tcp.o
+	$(CC) $(CFLAGS) -c ../iso.c -o ../iso.o
+	$(CC) $(CFLAGS) -c ../mcs.c -o ../mcs.o
+	$(CC) $(CFLAGS) -c ../secure.c -o ../secue.o
+	$(CC) $(CFLAGS) -c ../rdp.c -o ../rdp.o
+	$(CC) $(CFLAGS) -c ../rdp5.c -o ../rdp5.o
+	$(CC) $(CFLAGS) -c ../orders.c -o ../orders.o
+	$(CC) $(CFLAGS) -c ../cache.c -o ../cache.o
+	$(CC) $(CFLAGS) -c ../mppc.c -o ../mppc.o
+	$(CC) $(CFLAGS) -c ../licence.c -o ../licence.o
+	$(CC) $(CFLAGS) -c ../ssl.c -o ../ssl.o	
+	$(CC) $(CFLAGS) -c ../bitmap.c -o ../bitmap.o
+	$(CC) $(CFLAGS) -c ../channels.c -o ../channels.o
+	$(CC) $(CFLAGS) -c ../pstcache.c -o ../pstcache.o
+	$(CC) $(CFLAGS) -c ../disk.c -o ../disk.o
+	$(CC) $(CFLAGS) -c ../rdpdr.c -o ../rdpdr.o
+	$(CC) $(CFLAGS) -c ../serial.c -o ../serial.o
+	$(CC) $(CFLAGS) -c ../printer.c -o ../printer.o
+	$(CC) $(CFLAGS) -c ../printercache.c -o ../printercache.o
+	$(CC) $(CFLAGS) -c ../parallel.c -o ../parallel.o
+	$(CC) $(CFLAGS) -c ../seamless.c -o ../seamless.o
+	$(CC) $(CFLAGS) -c ../utils.c -o ../utils.o
+	$(CC) $(CFLAGS) -c ../asn.c -o ../asn.o
+
+svga_to_haiku.o: svga_to_haiku.c
+	$(CC) $(CFLAGS) -c $*.c
+window_haiku.o: window_haiku.cpp
+	$(CC) $(CFLAGS) -c $*.cpp
+clip_haiku.o: clip_haiku.cpp
+	$(CC) $(CFLAGS) -c $*.cpp
+rdpsnd_haiku.o: rdpsnd_haiku.cpp
+	$(CC) $(CFLAGS) -c $*.cpp
+
+clean:
+	rm -f rdesktop
+	rm -f ./vgagl/*.o
+	rm -f *.o
+	rm -f ../*.o

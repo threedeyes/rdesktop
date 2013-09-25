@@ -1,0 +1,10 @@
+# GL Module dependencies
+grlib.o: grlib.c vga.h inlstring.h vgagl.h def.h driver.h
+driver.o: driver.c vga.h inlstring.h vgagl.h def.h driver.h
+line.o: line.c vga.h inlstring.h vgagl.h def.h driver.h
+palette.o: palette.c vga.h vgagl.h def.h
+scale.o: scale.c vga.h inlstring.h vgagl.h def.h
+text.o: text.c vga.h inlstring.h vgagl.h def.h
+font8x8.o: font8x8.c
+cbitmap.o: cbitmap.c vga.h inlstring.h vgagl.h def.h
+mem.o: mem.c
